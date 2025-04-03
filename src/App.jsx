@@ -1,22 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-function App() {
+function TodoList() {
     const [todos, setTodos] = useState([]);
 
     useEffect(() => {
-        fetch("todo-app-u6pm.onrender.com/api/todos/fetch")  // Replace with your actual backend URL
+        fetch("https://todo-app-u6pm.onrender.com/api/todos/fetch/")
             .then(response => response.json())
             .then(data => setTodos(data))
-            .catch(error => console.error("Error fetching todos:", error));
+            .catch(error => console.error("Error fetching data:", error));
     }, []);
 
     return (
         <div>
-            <h1>Todo List</h1>
-            <ul>cd 
+            <h1>To-Do List</h1>
+            <ul>
                 {todos.map(todo => (
                     <li key={todo.id}>
-                        {todo.title} {todo.completed ? "✅" : "❌"}
+                        {todo.title} - {todo.completed ? "✅" : "❌"}
                     </li>
                 ))}
             </ul>
@@ -24,4 +24,4 @@ function App() {
     );
 }
 
-export default App;
+export default TodoList;
