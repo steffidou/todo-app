@@ -16,7 +16,7 @@ function App() {
   // Fetch tasks from the Django API
   useEffect(() => {
     const fetchTasks = async () => {
-      const response = await fetch("http://localhost:8000/api/todos/fetch");
+      const response = await fetch("https://todo-app-u6pm.onrender.com/api/todos/fetch");
       const data = await response.json();
       setTasks(data);
     };
@@ -26,7 +26,7 @@ function App() {
   const addTask = async () => {
     if (taskInput.trim() !== "") {
       const newTask = { title: taskInput, completed: false };  // Change `text` to `title`
-      const response = await fetch("http://localhost:8000/api/todos/create", {
+      const response = await fetch("https://todo-app-u6pm.onrender.com/api/todos/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newTask),
@@ -42,7 +42,7 @@ function App() {
     const task = tasks.find((task) => task.id === taskId);
     const updatedTask = { ...task, completed: !task.completed };
 
-    const response = await fetch(`http://localhost:8000/api/todos/${taskId}/update`, {
+    const response = await fetch(`https://todo-app-u6pm.onrender.com/api/todos/${taskId}/update`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedTask),
@@ -53,7 +53,7 @@ function App() {
   };
 
   const deleteTask = async (taskId) => {
-    await fetch(`http://localhost:8000/api/todos/${taskId}/delete`, {
+    await fetch(`https://todo-app-u6pm.onrender.com/api/todos/${taskId}/delete`, {
       method: "DELETE",
     });
     setTasks(tasks.filter((task) => task.id !== taskId));
@@ -66,7 +66,7 @@ function App() {
 
   const saveEdit = async (taskId) => {
     const updatedTask = { title: editText, completed: false }; // Change `text` to `title`
-    const response = await fetch(`http://localhost:8000/api/todos/${taskId}/update`, {
+    const response = await fetch(`https://todo-app-u6pm.onrender.com/api/todos/${taskId}/update`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedTask),
