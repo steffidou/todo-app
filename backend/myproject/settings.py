@@ -33,7 +33,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = ['http://steffidou.github.io', 
                         'http://todo-app-u6pm.onrender.com'
-                        ]
+]
 
 # Application definition
 
