@@ -4,7 +4,7 @@ function App() {
     const [todos, setTodos] = useState([]);
 
     useEffect(() => {
-        fetch("https://todo-app-u6pm.onrender.com/api/todos/fetch")  // Replace with your actual backend URL
+        fetch("todo-app-u6pm.onrender.com/api/todos/fetch")  // Replace with your actual backend URL
             .then(response => response.json())
             .then(data => setTodos(data))
             .catch(error => console.error("Error fetching todos:", error));
