@@ -13,22 +13,49 @@ function App() {
     document.body.classList.toggle("dark-mode", darkMode);
   }, [darkMode]);
 
-  const addTask = () => {
+  // Fetch tasks from the Django API
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const response = await fetch("http://localhost:8000/api/todos/fetch");
+      const data = await response.json();
+      setTasks(data);
+    };
+    fetchTasks();
+  }, []);
+
+  const addTask = async () => {
     if (taskInput.trim() !== "") {
-      setTasks([...tasks, { id: Date.now(), text: taskInput, completed: false }]);
-      setTaskInput("");
+      const newTask = { title: taskInput, completed: false };  // Change `text` to `title`
+      const response = await fetch("http://localhost:8000/api/todos/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newTask),
+      });
+      const data = await response.json();
+      setTasks([...tasks, data]);  // Add the new task to the state
+      setTaskInput("");  // Clear input after adding task
     }
   };
+  
 
-  const toggleTask = (taskId) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task
-      )
-    );
+  const toggleTask = async (taskId) => {
+    const task = tasks.find((task) => task.id === taskId);
+    const updatedTask = { ...task, completed: !task.completed };
+
+    const response = await fetch(`http://localhost:8000/api/todos/${taskId}/update`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedTask),
+    });
+    const data = await response.json();
+
+    setTasks(tasks.map((task) => (task.id === taskId ? data : task)));
   };
 
-  const deleteTask = (taskId) => {
+  const deleteTask = async (taskId) => {
+    await fetch(`http://localhost:8000/api/todos/${taskId}/delete`, {
+      method: "DELETE",
+    });
     setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
@@ -37,15 +64,19 @@ function App() {
     setEditText(text);
   };
 
-  const saveEdit = (taskId) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === taskId ? { ...task, text: editText } : task
-      )
-    );
+  const saveEdit = async (taskId) => {
+    const updatedTask = { title: editText, completed: false }; // Change `text` to `title`
+    const response = await fetch(`http://localhost:8000/api/todos/${taskId}/update`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedTask),
+    });
+    const data = await response.json();
+  
+    setTasks(tasks.map((task) => (task.id === taskId ? data : task)));
     setEditingId(null);
   };
-
+  
   const filteredTasks = tasks.filter((task) => {
     if (filter === "completed") return task.completed;
     if (filter === "pending") return !task.completed;
@@ -70,7 +101,9 @@ function App() {
             value={taskInput}
             onChange={(e) => setTaskInput(e.target.value)}
           />
-          <button onClick={addTask} className="add-btn">Add Task</button>
+          <button onClick={addTask} className="add-btn">
+            Add Task
+          </button>
         </div>
 
         <div className="filter-buttons">
@@ -88,22 +121,38 @@ function App() {
         <ul className="task-list">
           {filteredTasks.map((task) => (
             <li key={task.id} className="task-item">
-              <input type="checkbox" checked={task.completed} onChange={() => toggleTask(task.id)} />
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => toggleTask(task.id)}
+              />
               {editingId === task.id ? (
-                <input type="text" className="edit-input" value={editText} onChange={(e) => setEditText(e.target.value)} />
+                <input
+                  type="text"
+                  className="edit-input"
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                />
               ) : (
-                <span className={task.completed ? "completed" : ""}>{task.text}</span>
+                <span className={task.completed ? "completed" : ""}>{task.title}</span>
               )}
+
 
               <div className="task-actions">
                 {editingId === task.id ? (
-                  <button onClick={() => saveEdit(task.id)} className="save-btn">💾</button>
+                  <button onClick={() => saveEdit(task.id)} className="save-btn">
+                    💾
+                  </button>
                 ) : (
                   !task.completed && (
-                    <button onClick={() => enableEditing(task.id, task.text)} className="edit-btn">✏️</button>
+                    <button onClick={() => enableEditing(task.id, task.title)} className="edit-btn">
+                      ✏️
+                    </button>
                   )
                 )}
-                <button onClick={() => deleteTask(task.id)} className="delete-btn">❌</button>
+                <button onClick={() => deleteTask(task.id)} className="delete-btn">
+                  ❌
+                </button>
               </div>
             </li>
           ))}
