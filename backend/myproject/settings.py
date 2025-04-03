@@ -31,8 +31,8 @@ ALLOWED_HOSTS = ['todo-app-u6pm.onrender.com', 'steffidou.github.io/todo-app/']
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ALLOWED_ORIGINS = ['https://steffidou.github.io/todo-app/', 
-                        'https://todo-app-u6pm.onrender.com'
+CORS_ALLOWED_ORIGINS = ['steffidou.github.io/todo-app/', 
+                        'todo-app-u6pm.onrender.com'
                         ]
 
 # Application definition
