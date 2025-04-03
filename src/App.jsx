@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
 
-const API_URL = import.meta.env.VITE_BACKEND_URL; // Get backend URL from .env
-
 function App() {
-  const [data, setData] = useState(null);
+    const [todos, setTodos] = useState([]);
 
-  useEffect(() => {
-    fetch(`${API_URL}/your-endpoint`)  // Adjust this based on your Django API endpoint
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+    useEffect(() => {
+        fetch("https://todo-app-u6pm.onrender.com/api/todos/fetch")  // Replace with your actual backend URL
+            .then(response => response.json())
+            .then(data => setTodos(data))
+            .catch(error => console.error("Error fetching todos:", error));
+    }, []);
 
-  return (
-    <div>
-      <h1>Backend Data:</h1>
-      {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : <p>Loading...</p>}
-    </div>
-  );
+    return (
+        <div>
+            <h1>Todo List</h1>
+            <ul>cd 
+                {todos.map(todo => (
+                    <li key={todo.id}>
+                        {todo.title} {todo.completed ? "✅" : "❌"}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
 
 export default App;
