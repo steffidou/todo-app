@@ -27,9 +27,9 @@ SECRET_KEY = 'django-insecure-z(c5up#69=0gs8q_1o6y955$9sfx-z@i7oyk@pvx(ttj%a5v6*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['todo-app-u6pm.onrender.com', 'steffidou.github.io/todo-app/']
+ALLOWED_HOSTS = ['todo-app-u6pm.onrender.com', 'todo-app-appdev.netlify.app/']
 
-CORS_ALLOWED_ORIGINS = ['http://steffidou.github.io', 
+CORS_ALLOWED_ORIGINS = ['https://todo-app-appdev.netlify.app/', 
                         'http://todo-app-u6pm.onrender.com'
 ]
 
