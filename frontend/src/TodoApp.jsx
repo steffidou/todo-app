@@ -13,7 +13,6 @@ function App() {
     document.body.classList.toggle("dark-mode", darkMode);
   }, [darkMode]);
 
-  // Fetch tasks from the Django API
   useEffect(() => {
     const fetchTasks = async () => {
       const response = await fetch("https://todo-app-u6pm.onrender.com/api/todos/fetch");
@@ -25,18 +24,17 @@ function App() {
 
   const addTask = async () => {
     if (taskInput.trim() !== "") {
-      const newTask = { title: taskInput, completed: false };  // Change `text` to `title`
+      const newTask = { title: taskInput, completed: false };
       const response = await fetch("https://todo-app-u6pm.onrender.com/api/todos/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newTask),
       });
       const data = await response.json();
-      setTasks([...tasks, data]);  // Add the new task to the state
-      setTaskInput("");  // Clear input after adding task
+      setTasks([...tasks, data]);
+      setTaskInput("");
     }
   };
-  
 
   const toggleTask = async (taskId) => {
     const task = tasks.find((task) => task.id === taskId);
@@ -65,18 +63,18 @@ function App() {
   };
 
   const saveEdit = async (taskId) => {
-    const updatedTask = { title: editText, completed: false }; // Change `text` to `title`
+    const updatedTask = { title: editText, completed: false };
     const response = await fetch(`https://todo-app-u6pm.onrender.com/api/todos/${taskId}/update`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedTask),
     });
     const data = await response.json();
-  
+
     setTasks(tasks.map((task) => (task.id === taskId ? data : task)));
     setEditingId(null);
   };
-  
+
   const filteredTasks = tasks.filter((task) => {
     if (filter === "completed") return task.completed;
     if (filter === "pending") return !task.completed;
@@ -136,7 +134,6 @@ function App() {
               ) : (
                 <span className={task.completed ? "completed" : ""}>{task.title}</span>
               )}
-
 
               <div className="task-actions">
                 {editingId === task.id ? (

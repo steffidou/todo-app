@@ -1,179 +1,115 @@
-/* General Styling */
+/* index.css */
 body {
-  font-family: Georgia, 'Times New Roman', Times, serif, fantasy;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
-  background-color: #f8f9fa;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s ease-in-out;
 }
 
-/* Dark Mode */
-body.dark-mode {
+.dark-mode {
   background-color: #121212;
   color: #ffffff;
 }
 
-/* Centering App */
 .app-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
+  text-align: center;
   padding: 20px;
-  transition: background-color 0.3s;
 }
 
-/* To-Do List Container */
 .todo-container {
-  background-color: white;
+  background: #fff;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  width: 1000px;
-  height: 450px; /* This is fine for the outer container, but we'll adjust the task list inside it */
-  text-align: center;
-  transition: background-color 0.3s;
-  overflow: hidden;  /* Prevents content from spilling over */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  width: 50%;
+  margin: auto;
+  transition: background-color 0.3s ease-in-out;
 }
 
-/* Task List */
-.task-list {
-  max-height: 350px;  /* Adjust the max-height to fit within the container */
-  overflow-y: auto;   /* Adds scroll if tasks exceed the height */
-  padding: 0;
-  list-style: none;
-  margin: 0;
+.dark-mode .todo-container {
+  background: #333;
+  color: #fff;
 }
 
-/* Task Item */
-.task-item {
-  display: flex;
-  align-items: center;
-  background-color: #f1f1f1;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 8px;
-  transition: background 0.3s;
+h1 {
+  font-size: 28px;
 }
 
-body.dark-mode .task-item {
-  background-color: #2a2a2a;
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
-
-body.dark-mode .todo-container {
-  background-color: #1e1e1e;
-  box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
-}
-
-/* Dark Mode Button */
-.dark-mode-btn {
-  background-color: #444;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  width: 150px;
-  height: 50px;
-  cursor: pointer;
-  margin-bottom: 15px;
-  transition: background 0.3s;
-}
-
-.dark-mode-btn:hover {
-  background-color: #666;
-}
-
-body.dark-mode .dark-mode-btn {
-  background-color: #ddd;
-  color: #222;
-}
-
-body.dark-mode .dark-mode-btn:hover {
-  background-color: #bbb;
-}
-
-/* Task Input */
 .task-input {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.task-input input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  transition: border 0.3s;
-}
-
-body.dark-mode .task-input input {
-  background-color: #333;
-  color: white;
-  border: 1px solid #555;
-}
-
-/* Add Button */
-.add-btn {
-  background-color: green;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.add-btn:hover {
-  background-color: darkgreen;
-}
-
-/* Filter Buttons */
-.filter-buttons {
   display: flex;
   justify-content: center;
   gap: 10px;
   margin-bottom: 15px;
 }
 
+.task-input input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 60%;
+}
+
+.task-input .add-btn {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.task-input .add-btn:hover {
+  background-color: darkgreen;
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
 .filter-buttons button {
   padding: 8px 12px;
   border: none;
-  border-radius: 5px;
+  background-color: #ccc;
   cursor: pointer;
-  background-color: #ddd;
-  transition: background 0.3s;
+  border-radius: 5px;
 }
 
-.filter-buttons button:hover {
-  background-color: #bbb;
-}
-
-.filter-buttons .active {
+.filter-buttons button.active {
   background-color: blue;
   color: white;
 }
 
-/* Task List */
 .task-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .task-item {
   display: flex;
   align-items: center;
-  background-color: #f1f1f1;
+  justify-content: space-between;
+  background: #f9f9f9;
   padding: 10px;
   border-radius: 5px;
-  margin-bottom: 8px;
-  transition: background 0.3s;
+  margin-bottom: 5px;
 }
 
-body.dark-mode .task-item {
-  background-color: #2a2a2a;
+.dark-mode .task-item {
+  background: #444;
 }
 
 .task-item input[type="checkbox"] {
@@ -182,31 +118,39 @@ body.dark-mode .task-item {
 
 .task-item .completed {
   text-decoration: line-through;
-  color: gray;
+  color: grey;
 }
 
-/* Task Actions */
 .task-actions {
-  margin-left: auto;
   display: flex;
   gap: 5px;
 }
 
-.edit-btn, .delete-btn, .save-btn {
+.task-actions button {
   background: none;
   border: none;
   cursor: pointer;
   font-size: 16px;
 }
 
-.edit-btn:hover {
+.edit-btn {
   color: orange;
 }
 
-.delete-btn:hover {
+.delete-btn {
   color: red;
 }
 
-.save-btn:hover {
-  color: green;
+.dark-mode-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dark-mode .dark-mode-btn {
+  background: #fff;
+  color: #000;
 }
