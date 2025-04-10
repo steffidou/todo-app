@@ -1,5 +1,7 @@
 from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from .models import TodoItem
 from .serializers import TodoItemSerializer
@@ -78,11 +80,9 @@ class TodoDeleteView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
 
-class MyProtectedView(APIView):
+class SecureHelloView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        return Response({"message": "Hello, World!"})
+def get(self, request):
+    return Response({"message": f"Hello, {request.user.username}!"})
