@@ -91,7 +91,9 @@ class MyProtectedView(APIView):
         return Response({"message": "Hello from a protected view!"})
 
 class SecureHelloView(APIView):
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-def get(self, request):
-    return Response({"message": f"Hello, {request.user.username}!"})
+    def get(self, request):
+        return Response({"message": f"Hello, {request.user.username}!"})
+
